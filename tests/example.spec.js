@@ -1,19 +1,19 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import {ai} from '@zerostep/playwright';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('AI demo test', async ({ page }) => {
+  const aiArgs = { page, test }
+  await page.goto('https://rahulshettyacademy.com/seleniumPractise/#/offers');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+  const costOfTomato  = await ai("What is the Price for Tomato?",aiArgs)
+  const discountedPrice = await ai("What is the Discount price for Tomato?",aiArgs)
+  const diff = await ai("What is the price difference between the cost and the discounted price of tomato",aiArgs)
+  const percentage = await ai("Based on price and discounted price of tomato, what is the exact percentage of discount provided for tomato?",aiArgs)
+  expect(costOfTomato).toEqual("37");
+  expect(discountedPrice).toEqual("26");
+  expect(diff).toEqual("11");
+  // console.log(percentage)
+  expect(percentage).toEqual("30");
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
